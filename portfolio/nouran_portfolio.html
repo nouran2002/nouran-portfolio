@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nouran Waleed Mohamed — Data Analyst & AI Solutions Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Sora:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg-primary:#020617;
+--bg-secondary:#071B3B;
+--blue:#2563FF;
+--cyan:#00D4FF;
+--violet:#6D28FF;
+--text:#E2E8F0;
+--text-muted:#94A3B8;
+--border:rgba(37,99,255,0.15);
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg-primary);color:var(--text);font-family:'Inter',sans-serif;overflow-x:hidden;cursor:none}
+
+/* Custom cursor */
+.cursor{width:12px;height:12px;background:var(--cyan);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:99999;mix-blend-mode:difference;transition:transform 0.1s ease}
+.cursor-ring{width:40px;height:40px;border:1px solid rgba(0,212,255,0.4);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:99998;transition:transform 0.15s ease}
+
+/* Loading Screen */
+#loader{position:fixed;inset:0;background:var(--bg-primary);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 0.8s ease}
+.loader-core{width:80px;height:80px;position:relative;margin-bottom:40px}
+.loader-core::before,.loader-core::after{content:'';position:absolute;border-radius:50%;animation:pulse-ring 2s ease-out infinite}
+.loader-core::before{inset:0;border:2px solid var(--cyan);animation-delay:0s}
+.loader-core::after{inset:8px;border:2px solid var(--blue);animation-delay:0.4s}
+.loader-dot{width:20px;height:20px;background:radial-gradient(circle,var(--cyan),var(--blue));border-radius:50%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);animation:glow-pulse 1.5s ease-in-out infinite}
+@keyframes pulse-ring{0%{transform:scale(0.8);opacity:1}100%{transform:scale(1.8);opacity:0}}
+@keyframes glow-pulse{0%,100%{box-shadow:0 0 20px var(--cyan),0 0 40px rgba(0,212,255,0.5)}50%{box-shadow:0 0 40px var(--cyan),0 0 80px rgba(0,212,255,0.8)}}
+.loader-text{font-family:'Sora',sans-serif;font-size:13px;letter-spacing:4px;text-transform:uppercase;color:var(--cyan);opacity:0.8;margin-bottom:20px}
+.loader-bar{width:200px;height:1px;background:rgba(0,212,255,0.1);position:relative;overflow:hidden}
+.loader-bar::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,var(--cyan),transparent);animation:scan 1.5s ease-in-out infinite}
+@keyframes scan{0%{left:-100%}100%{left:100%}}
+.loader-particles{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.lp{position:absolute;width:2px;height:2px;background:var(--cyan);border-radius:50%;animation:float-up 3s ease-in-out infinite}
+
+/* Nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:20px 60px;display:flex;align-items:center;justify-content:space-between;background:rgba(2,6,23,0.8);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:all 0.3s}
+.nav-logo{font-family:'Sora',sans-serif;font-size:18px;font-weight:700;background:linear-gradient(135deg,var(--cyan),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-0.5px}
+.nav-links{display:flex;gap:40px;list-style:none}
+.nav-links a{color:var(--text-muted);text-decoration:none;font-size:13px;letter-spacing:1px;text-transform:uppercase;transition:color 0.3s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--cyan);transition:width 0.3s}
+.nav-links a:hover{color:var(--cyan)}
+.nav-links a:hover::after{width:100%}
+.nav-cta{padding:10px 24px;border:1px solid var(--blue);border-radius:6px;color:var(--cyan);font-size:12px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;background:rgba(37,99,255,0.05);transition:all 0.3s;text-decoration:none}
+.nav-cta:hover{background:rgba(37,99,255,0.15);box-shadow:0 0 20px rgba(37,99,255,0.3)}
+
+/* Hero */
+#home{min-height:100vh;position:relative;display:flex;align-items:center;overflow:hidden}
+.hero-canvas{position:absolute;inset:0;z-index:0}
+.hero-content{position:relative;z-index:2;padding:0 60px;max-width:800px;padding-top:100px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;border:1px solid rgba(0,212,255,0.2);border-radius:100px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:32px;background:rgba(0,212,255,0.03)}
+.hero-badge::before{content:'';width:6px;height:6px;background:var(--cyan);border-radius:50%;animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+.hero-name{font-family:'Sora',sans-serif;font-size:clamp(48px,6vw,80px);font-weight:800;line-height:1.05;letter-spacing:-2px;margin-bottom:20px}
+.hero-name .line1{display:block;background:linear-gradient(135deg,#fff 0%,rgba(255,255,255,0.7) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-name .line2{display:block;background:linear-gradient(135deg,var(--cyan) 0%,var(--blue) 50%,var(--violet) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-title{font-size:18px;color:var(--text-muted);margin-bottom:16px;font-weight:300;letter-spacing:0.5px}
+.hero-tagline{font-size:15px;color:rgba(148,163,184,0.8);line-height:1.7;max-width:550px;margin-bottom:48px}
+.hero-ctas{display:flex;gap:16px;flex-wrap:wrap}
+.btn-primary{padding:14px 32px;background:linear-gradient(135deg,var(--blue),var(--violet));border-radius:8px;color:#fff;font-size:13px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border:none;transition:all 0.3s;text-decoration:none;display:inline-block}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 40px rgba(37,99,255,0.4)}
+.btn-secondary{padding:14px 32px;border:1px solid rgba(0,212,255,0.3);border-radius:8px;color:var(--cyan);font-size:13px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;background:transparent;transition:all 0.3s;text-decoration:none;display:inline-block}
+.btn-secondary:hover{background:rgba(0,212,255,0.05);box-shadow:0 0 30px rgba(0,212,255,0.2)}
+.btn-ghost{padding:14px 32px;border:1px solid var(--border);border-radius:8px;color:var(--text-muted);font-size:13px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;background:transparent;transition:all 0.3s;text-decoration:none;display:inline-block}
+.btn-ghost:hover{border-color:rgba(148,163,184,0.4);color:var(--text)}
+
+/* Floating KPI cards */
+.kpi-float{position:absolute;right:80px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:16px;z-index:2}
+.kpi-card{background:rgba(7,27,59,0.9);border:1px solid rgba(0,212,255,0.1);border-radius:12px;padding:20px 28px;backdrop-filter:blur(20px);animation:float-card 3s ease-in-out infinite;min-width:180px}
+.kpi-card:nth-child(2){animation-delay:0.5s;animation-duration:3.5s}
+.kpi-card:nth-child(3){animation-delay:1s;animation-duration:4s}
+@keyframes float-card{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.kpi-val{font-family:'Sora',sans-serif;font-size:28px;font-weight:700;background:linear-gradient(135deg,var(--cyan),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.kpi-label{font-size:11px;color:var(--text-muted);letter-spacing:1.5px;text-transform:uppercase;margin-top:4px}
+
+/* Section base */
+section{padding:120px 60px;position:relative}
+.section-tag{display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--cyan);margin-bottom:20px}
+.section-tag::before{content:'';width:30px;height:1px;background:var(--cyan)}
+.section-title{font-family:'Sora',sans-serif;font-size:clamp(36px,4vw,56px);font-weight:700;letter-spacing:-1.5px;line-height:1.1;margin-bottom:24px}
+.gradient-text{background:linear-gradient(135deg,var(--cyan),var(--blue),var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.section-desc{font-size:16px;color:var(--text-muted);line-height:1.8;max-width:600px}
+.divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:0}
+
+/* About */
+#about{background:linear-gradient(180deg,var(--bg-primary) 0%,rgba(7,27,59,0.3) 100%)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;margin-top:60px}
+.about-text p{font-size:16px;line-height:1.9;color:var(--text-muted);margin-bottom:20px}
+.about-text p strong{color:var(--text)}
+.about-stats{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.stat-box{background:rgba(7,27,59,0.6);border:1px solid var(--border);border-radius:12px;padding:24px;transition:all 0.3s}
+.stat-box:hover{border-color:rgba(0,212,255,0.3);transform:translateY(-4px)}
+.stat-num{font-family:'Sora',sans-serif;font-size:36px;font-weight:700;background:linear-gradient(135deg,var(--cyan),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stat-lbl{font-size:12px;color:var(--text-muted);letter-spacing:1px;margin-top:4px}
+.about-visual{position:relative}
+.neural-box{background:rgba(7,27,59,0.8);border:1px solid rgba(0,212,255,0.1);border-radius:16px;padding:32px;position:relative;overflow:hidden}
+.neural-title{font-family:'Sora',sans-serif;font-size:14px;font-weight:600;color:var(--cyan);margin-bottom:20px;letter-spacing:1px;text-transform:uppercase}
+.skill-tag{display:inline-block;padding:6px 14px;border:1px solid rgba(37,99,255,0.3);border-radius:100px;font-size:11px;color:var(--text-muted);margin:4px;letter-spacing:0.5px;transition:all 0.3s}
+.skill-tag:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(0,212,255,0.05)}
+
+/* OlistIQ Case Study */
+#olistiq{background:rgba(7,27,59,0.2)}
+.case-hero{background:linear-gradient(135deg,rgba(37,99,255,0.05) 0%,rgba(109,40,255,0.05) 100%);border:1px solid var(--border);border-radius:20px;padding:60px;margin-bottom:60px;position:relative;overflow:hidden}
+.case-hero::before{content:'OlistIQ';position:absolute;top:-20px;right:-20px;font-family:'Sora',sans-serif;font-size:120px;font-weight:800;color:rgba(37,99,255,0.03);pointer-events:none;letter-spacing:-5px}
+.case-links{display:flex;gap:12px;margin-top:32px}
+.case-link{padding:10px 24px;background:rgba(37,99,255,0.1);border:1px solid rgba(37,99,255,0.3);border-radius:6px;color:var(--cyan);font-size:12px;letter-spacing:1px;text-transform:uppercase;text-decoration:none;transition:all 0.3s}
+.case-link:hover{background:rgba(37,99,255,0.2);box-shadow:0 0 20px rgba(37,99,255,0.3)}
+.case-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-bottom:60px}
+.case-card{background:rgba(7,27,59,0.6);border:1px solid var(--border);border-radius:16px;padding:36px;transition:all 0.4s}
+.case-card:hover{border-color:rgba(0,212,255,0.2);transform:translateY(-6px);box-shadow:0 20px 60px rgba(37,99,255,0.1)}
+.case-card h3{font-family:'Sora',sans-serif;font-size:20px;font-weight:600;margin-bottom:16px;color:var(--text)}
+.case-card p{font-size:14px;line-height:1.8;color:var(--text-muted)}
+
+/* ETL Pipeline */
+.etl-wrapper{background:rgba(7,27,59,0.6);border:1px solid var(--border);border-radius:20px;padding:48px;margin:40px 0}
+.etl-title{font-family:'Sora',sans-serif;font-size:18px;font-weight:600;color:var(--text);margin-bottom:40px;text-align:center;letter-spacing:-0.5px}
+.etl-flow{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap}
+.etl-stage{display:flex;flex-direction:column;align-items:center;gap:12px;padding:24px 20px;background:rgba(2,6,23,0.6);border:1px solid var(--border);border-radius:12px;min-width:120px;position:relative;transition:all 0.3s;cursor:pointer}
+.etl-stage:hover{border-color:rgba(0,212,255,0.3);transform:translateY(-4px)}
+.etl-stage.active{border-color:var(--cyan);box-shadow:0 0 30px rgba(0,212,255,0.2)}
+.etl-num{width:32px;height:32px;background:linear-gradient(135deg,var(--blue),var(--violet));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff}
+.etl-name{font-size:12px;color:var(--text);font-weight:500;text-align:center;letter-spacing:0.5px}
+.etl-desc{font-size:10px;color:var(--text-muted);text-align:center;max-width:100px}
+.etl-arrow{width:40px;height:2px;background:linear-gradient(90deg,var(--blue),var(--cyan));position:relative;margin:0}
+.etl-arrow::after{content:'';position:absolute;right:-1px;top:50%;transform:translateY(-50%);border:5px solid transparent;border-left:8px solid var(--cyan)}
+.etl-pulse{position:absolute;top:50%;left:0;width:8px;height:8px;background:var(--cyan);border-radius:50%;transform:translateY(-50%);animation:travel 2s linear infinite}
+@keyframes travel{0%{left:0;opacity:1}100%{left:calc(100% - 8px);opacity:0}}
+
+/* KPI Impact */
+.kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin:40px 0}
+.kpi-impact{background:rgba(7,27,59,0.8);border:1px solid var(--border);border-radius:16px;padding:32px;text-align:center;transition:all 0.4s;position:relative;overflow:hidden}
+.kpi-impact::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--cyan))}
+.kpi-impact:hover{border-color:rgba(0,212,255,0.2);transform:translateY(-6px)}
+.kpi-big{font-family:'Sora',sans-serif;font-size:48px;font-weight:800;background:linear-gradient(135deg,var(--cyan),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+.kpi-unit{font-size:20px;font-weight:600;color:var(--cyan)}
+.kpi-desc{font-size:13px;color:var(--text-muted);margin-top:8px}
+
+/* AI Chat Section */
+.ai-section{background:rgba(7,27,59,0.4);border:1px solid var(--border);border-radius:20px;padding:48px;margin:40px 0}
+.ai-chat-preview{background:rgba(2,6,23,0.8);border:1px solid rgba(0,212,255,0.1);border-radius:12px;padding:24px;margin-top:24px}
+.chat-msg{padding:16px 20px;border-radius:10px;margin-bottom:12px;font-size:14px;line-height:1.6;animation:fade-in 0.5s ease}
+@keyframes fade-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.chat-user{background:rgba(37,99,255,0.1);border:1px solid rgba(37,99,255,0.2);margin-left:60px;color:var(--text)}
+.chat-ai{background:rgba(0,212,255,0.03);border:1px solid rgba(0,212,255,0.1);margin-right:60px;color:var(--text-muted)}
+.chat-ai strong{color:var(--cyan)}
+
+/* Dashboard showcase */
+.dash-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+.dash-frame{background:rgba(7,27,59,0.6);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:all 0.4s;cursor:pointer;position:relative}
+.dash-frame:hover{border-color:rgba(0,212,255,0.3);transform:scale(1.02);box-shadow:0 20px 60px rgba(37,99,255,0.15)}
+.dash-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.dash-title{font-size:13px;font-weight:600;color:var(--text)}
+.dash-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.dash-kpi{background:rgba(37,99,255,0.1);border-radius:6px;padding:8px 10px}
+.dash-kpi-val{font-size:14px;font-weight:700;color:var(--cyan)}
+.dash-kpi-lbl{font-size:9px;color:var(--text-muted)}
+.dash-chart{flex:1;background:rgba(2,6,23,0.4);border-radius:6px;display:flex;align-items:flex-end;padding:8px;gap:4px}
+.dash-bar{background:linear-gradient(180deg,var(--cyan),var(--blue));border-radius:2px 2px 0 0;flex:1;transition:height 0.5s ease}
+.dash-info{padding:16px 20px}
+.dash-name{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px}
+.dash-sub{font-size:12px;color:var(--text-muted)}
+.dash-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.dash-tag{padding:3px 10px;background:rgba(37,99,255,0.1);border:1px solid rgba(37,99,255,0.2);border-radius:100px;font-size:10px;color:var(--blue);letter-spacing:0.5px}
+.real-dashboard{width:100%;height:auto;display:block;border-bottom:1px solid rgba(255,255,255,0.05);transition:transform 0.5s ease;}
+.dash-frame:hover .real-dashboard{transform:scale(1.03);}
+
+
+/* Projects */
+#projects{background:var(--bg-primary)}
+.projects-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:60px}
+.project-card{background:rgba(7,27,59,0.5);border:1px solid var(--border);border-radius:16px;padding:36px;transition:all 0.4s;position:relative;overflow:hidden}
+.project-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--cyan),var(--violet));transform:scaleX(0);transform-origin:left;transition:transform 0.4s ease}
+.project-card:hover::before{transform:scaleX(1)}
+.project-card:hover{border-color:rgba(37,99,255,0.2);transform:translateY(-6px);box-shadow:0 20px 60px rgba(37,99,255,0.1)}
+.project-icon{width:48px;height:48px;background:linear-gradient(135deg,var(--blue),var(--violet));border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:20px}
+.project-title{font-family:'Sora',sans-serif;font-size:18px;font-weight:600;color:var(--text);margin-bottom:12px}
+.project-desc{font-size:14px;color:var(--text-muted);line-height:1.7;margin-bottom:20px}
+.tech-pills{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.tech-pill{padding:4px 12px;background:rgba(37,99,255,0.08);border:1px solid rgba(37,99,255,0.2);border-radius:100px;font-size:10px;color:var(--blue);letter-spacing:0.5px}
+.project-link{display:inline-flex;align-items:center;gap:6px;color:var(--cyan);font-size:12px;letter-spacing:1px;text-transform:uppercase;text-decoration:none;transition:gap 0.3s}
+.project-link:hover{gap:10px}
+
+
+/* Architecture */
+#architecture{background:rgba(7,27,59,0.1)}
+.arch-diagram{background:rgba(7,27,59,0.6);border:1px solid var(--border);border-radius:20px;padding:48px;margin-top:60px}
+.arch-layers{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;position:relative}
+.arch-layer{border-radius:16px;padding:32px;text-align:center;position:relative;transition:all 0.4s}
+.arch-layer.bronze{background:rgba(180,120,50,0.06);border:1px solid rgba(180,120,50,0.2)}
+.arch-layer.silver{background:rgba(150,150,180,0.06);border:1px solid rgba(150,150,180,0.2)}
+.arch-layer.gold{background:rgba(200,160,50,0.06);border:1px solid rgba(200,160,50,0.2)}
+.arch-layer:hover{transform:translateY(-8px)}
+.arch-badge{display:inline-block;padding:6px 20px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px}
+.bronze .arch-badge{background:rgba(180,120,50,0.2);color:#B4783A}
+.silver .arch-badge{background:rgba(150,150,180,0.2);color:#9494B4}
+.gold .arch-badge{background:rgba(200,160,50,0.2);color:#C8A032}
+.arch-items{list-style:none;text-align:left;margin-top:16px}
+.arch-items li{font-size:13px;color:var(--text-muted);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);display:flex;align-items:center;gap:8px}
+.arch-items li::before{content:'›';color:var(--cyan);font-size:16px}
+.arch-arrow{display:flex;align-items:center;justify-content:center;color:var(--cyan);font-size:30px;padding-top:60px}
+
+/* Skills */
+#skills{background:var(--bg-primary)}
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:60px}
+.skill-module{background:rgba(7,27,59,0.5);border:1px solid var(--border);border-radius:16px;padding:32px;transition:all 0.4s}
+.skill-module:hover{border-color:rgba(0,212,255,0.2);transform:translateY(-4px)}
+.skill-cat{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:16px}
+.skill-name{font-family:'Sora',sans-serif;font-size:18px;font-weight:600;color:var(--text);margin-bottom:20px}
+.skill-list{list-style:none}
+.skill-list li{font-size:13px;color:var(--text-muted);padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);display:flex;align-items:center;gap:8px}
+.skill-list li::before{content:'';width:4px;height:4px;background:var(--cyan);border-radius:50%;flex-shrink:0}
+
+/* Certifications */
+#certifications{background:rgba(7,27,59,0.15)}
+.certs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:60px}
+.cert-card{background:rgba(7,27,59,0.6);border:1px solid var(--border);border-radius:16px;padding:8px;transition:all 0.4s;position:relative;overflow:hidden;cursor:pointer}
+.cert-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(37,99,255,0.05),rgba(109,40,255,0.05));opacity:0;transition:opacity 0.3s}
+.cert-card:hover{border-color:rgba(0,212,255,0.25);transform:translateY(-4px);box-shadow:0 20px 40px rgba(37,99,255,0.1)}
+.cert-card:hover::after{opacity:1}
+.cert-org{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:12px}
+.cert-name{font-size:15px;font-weight:600;color:var(--text);line-height:1.4;margin-bottom:12px}
+.cert-date{font-size:11px;color:var(--text-muted)}
+.cert-badge{position:absolute;top:20px;right:20px;width:32px;height:32px;background:linear-gradient(135deg,var(--blue),var(--violet));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px}
+.cert-image{width:100%;height:250px;object-fit:cover;border-radius:12px;margin-bottom:18px;border:1px solid rgba(255,255,255,0.06);transition:transform 0.4s ease;}
+.cert-card:hover .cert-image{transform:scale(1.02);}
+
+/* Timeline */
+#timeline{background:var(--bg-primary)}
+.timeline-wrap{position:relative;margin-top:60px;padding-left:60px}
+.timeline-line{position:absolute;left:20px;top:0;bottom:0;width:1px;background:linear-gradient(180deg,var(--cyan),var(--blue),var(--violet),transparent)}
+.timeline-item{position:relative;margin-bottom:48px;padding-left:40px}
+.timeline-dot{position:absolute;left:-48px;top:6px;width:16px;height:16px;background:linear-gradient(135deg,var(--cyan),var(--blue));border-radius:50%;border:3px solid var(--bg-primary);box-shadow:0 0 20px rgba(0,212,255,0.4)}
+.timeline-date{font-size:11px;color:var(--cyan);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
+.timeline-title{font-family:'Sora',sans-serif;font-size:18px;font-weight:600;color:var(--text);margin-bottom:8px}
+.timeline-desc{font-size:14px;color:var(--text-muted);line-height:1.7}
+
+/* NourAI */
+#assistant{background:rgba(7,27,59,0.2)}
+.ai-panel{background:rgba(2,6,23,0.9);border:1px solid rgba(0,212,255,0.15);border-radius:20px;max-width:800px;margin:60px auto 0;overflow:hidden}
+.ai-panel-header{padding:24px 32px;background:rgba(7,27,59,0.8);border-bottom:1px solid rgba(0,212,255,0.1);display:flex;align-items:center;gap:16px}
+.ai-orb{width:40px;height:40px;background:radial-gradient(circle,var(--cyan),var(--blue));border-radius:50%;animation:glow-pulse 2s ease-in-out infinite;flex-shrink:0}
+.ai-panel-title{font-family:'Sora',sans-serif;font-size:16px;font-weight:600;color:var(--text)}
+.ai-panel-sub{font-size:12px;color:var(--text-muted)}
+.ai-status{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:11px;color:var(--cyan)}
+.ai-status::before{content:'';width:6px;height:6px;background:var(--cyan);border-radius:50%;animation:blink 1.5s ease-in-out infinite}
+.ai-messages{padding:24px 32px;min-height:300px;max-height:400px;overflow-y:auto;display:flex;flex-direction:column;gap:16px}
+.ai-messages::-webkit-scrollbar{width:4px}
+.ai-messages::-webkit-scrollbar-track{background:transparent}
+.ai-messages::-webkit-scrollbar-thumb{background:rgba(0,212,255,0.2);border-radius:2px}
+.msg-row{display:flex;gap:12px;align-items:flex-start}
+.msg-row.user-row{flex-direction:row-reverse}
+.msg-avatar{width:32px;height:32px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.msg-avatar.ai-av{background:linear-gradient(135deg,var(--cyan),var(--blue));color:#fff}
+.msg-avatar.user-av{background:rgba(37,99,255,0.2);border:1px solid rgba(37,99,255,0.3);color:var(--blue)}
+.msg-bubble{padding:12px 16px;border-radius:12px;max-width:85%;font-size:14px;line-height:1.7}
+.msg-bubble.ai-bubble{background:rgba(7,27,59,0.8);border:1px solid rgba(0,212,255,0.1);color:var(--text-muted)}
+.msg-bubble.user-bubble{background:rgba(37,99,255,0.1);border:1px solid rgba(37,99,255,0.2);color:var(--text)}
+.msg-bubble strong{color:var(--cyan)}
+.msg-bubble a{color:var(--cyan)}
+.typing-indicator{display:flex;gap:4px;align-items:center;padding:4px}
+.typing-indicator span{width:6px;height:6px;background:var(--cyan);border-radius:50%;animation:typing 1.2s ease-in-out infinite}
+.typing-indicator span:nth-child(2){animation-delay:0.2s}
+.typing-indicator span:nth-child(3){animation-delay:0.4s}
+@keyframes typing{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+.ai-input-row{padding:20px 32px;border-top:1px solid rgba(0,212,255,0.1);display:flex;gap:12px;align-items:center}
+.ai-input{flex:1;background:rgba(7,27,59,0.6);border:1px solid rgba(0,212,255,0.1);border-radius:10px;padding:12px 16px;color:var(--text);font-size:14px;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.3s}
+.ai-input:focus{border-color:rgba(0,212,255,0.3);background:rgba(7,27,59,0.8)}
+.ai-input::placeholder{color:var(--text-muted)}
+.ai-send{width:44px;height:44px;background:linear-gradient(135deg,var(--blue),var(--violet));border:none;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s;color:#fff;font-size:16px}
+.ai-send:hover{transform:scale(1.05);box-shadow:0 0 20px rgba(37,99,255,0.4)}
+.ai-suggestions{padding:12px 32px;display:flex;gap:8px;flex-wrap:wrap}
+.ai-suggestion{padding:6px 14px;background:rgba(37,99,255,0.08);border:1px solid rgba(37,99,255,0.2);border-radius:100px;font-size:11px;color:var(--text-muted);cursor:pointer;transition:all 0.3s;letter-spacing:0.5px}
+.ai-suggestion:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(0,212,255,0.05)}
+
+/* Contact */
+#contact{background:rgba(7,27,59,0.1)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-top:60px;align-items:start}
+.contact-info{display:flex;flex-direction:column;gap:20px}
+.contact-item{display:flex;align-items:center;gap:16px;padding:20px 24px;background:rgba(7,27,59,0.6);border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all 0.3s}
+.contact-item:hover{border-color:rgba(0,212,255,0.3);transform:translateX(6px);box-shadow:0 0 30px rgba(37,99,255,0.1)}
+.contact-icon{width:44px;height:44px;background:linear-gradient(135deg,var(--blue),var(--violet));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.contact-label{font-size:11px;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
+.contact-val{font-size:14px;color:var(--text);font-weight:500}
+.contact-cta-box{background:linear-gradient(135deg,rgba(37,99,255,0.08),rgba(109,40,255,0.08));border:1px solid var(--border);border-radius:20px;padding:48px;text-align:center}
+.contact-cta-box h3{font-family:'Sora',sans-serif;font-size:28px;font-weight:700;color:var(--text);margin-bottom:16px;letter-spacing:-0.5px}
+.contact-cta-box p{font-size:15px;color:var(--text-muted);line-height:1.7;margin-bottom:32px}
+
+/* Footer */
+footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.footer-logo{font-family:'Sora',sans-serif;font-size:14px;font-weight:700;background:linear-gradient(135deg,var(--cyan),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.footer-copy{font-size:12px;color:var(--text-muted)}
+
+/* Reveal animations */
+.reveal{opacity:0;transform:translateY(40px);transition:all 0.8s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg-primary)}
+::-webkit-scrollbar-thumb{background:rgba(37,99,255,0.3);border-radius:2px}
+
+/* Mobile */
+@media(max-width:900px){
+nav{padding:16px 24px}
+.nav-links{display:none}
+section{padding:80px 24px}
+.hero-content{padding:0 24px;padding-top:100px}
+.hero-name{font-size:42px}
+.kpi-float{display:none}
+.about-grid,.case-grid,.projects-grid,.skills-grid,.certs-grid,.contact-grid,.arch-layers,.kpi-grid,.dash-grid{grid-template-columns:1fr}
+.etl-flow{flex-direction:column}
+.etl-arrow{transform:rotate(90deg)}
+footer{flex-direction:column;gap:16px;text-align:center;padding:32px 24px}
+}
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Loading Screen -->
+<div id="loader">
+  <div class="loader-particles" id="loaderParticles"></div>
+  <div class="loader-core">
+    <div class="loader-dot"></div>
+  </div>
+  <div class="loader-text" id="loaderText">Initializing Intelligence Systems</div>
+  <div class="loader-bar"></div>
+</div>
+
+<!-- Navigation -->
+<nav id="navbar">
+  <div class="nav-logo">Nouran.AI</div>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#olistiq">OlistIQ</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#certifications">certifications</a></li>
+    <li><a href="#assistant">chatbot</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Contact Me</a>
+</nav>
+
+<!-- Hero -->
+<section id="home">
+  <canvas class="hero-canvas" id="neuralCanvas"></canvas>
+  <div class="hero-content">
+    <div class="hero-badge">Available for Opportunities</div>
+    <h1 class="hero-name">
+      <span class="line1">Nouran Waleed</span>
+      <span class="line2">Mohamed</span>
+    </h1>
+    <p class="hero-title">Data Analyst  ·  AI Solutions Developer</p>
+    <p class="hero-tagline">Building AI-powered data experiences that transform raw data into smarter decisions — from ETL pipelines to conversational intelligence platforms.</p>
+    <div class="hero-ctas">
+      <a href="#olistiq" class="btn-primary">Explore OlistIQ</a>
+      <a href="#projects" class="btn-secondary">View Projects</a>
+      <a href="#contact" class="btn-ghost">Contact Me</a>
+    </div>
+  </div>
+  <div class="kpi-float">
+    <div class="kpi-card">
+      <div class="kpi-val">100K+</div>
+      <div class="kpi-label">Records Processed</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-val">15+</div>
+      <div class="kpi-label">Certifications</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-val">5-Stage</div>
+      <div class="kpi-label">ETL Pipeline</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- About -->
+<section id="about">
+  <div class="section-tag">The Story</div>
+  <h2 class="section-title">Intelligence <span class="gradient-text">by Design</span></h2>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>I don't just analyze data — I architect <strong>intelligence systems</strong> that bridge the gap between raw numbers and executive decisions. My approach treats every dataset as a living system waiting to tell its story.</p>
+      <p>From building <strong>Medallion Architecture data warehouses</strong> in SQL Server to deploying <strong>AI-powered conversational analytics</strong> with Google Gemini, I design end-to-end data ecosystems that actually move the needle.</p>
+      <p>My philosophy is simple: data without intelligence is noise. Every pipeline I build, every dashboard I craft, every AI integration I architect is designed with one question in mind — <strong>what decision does this enable?</strong></p>
+      <div class="about-stats" style="margin-top:32px">
+        <div class="stat-box">
+          <div class="stat-num">8+</div>
+          <div class="stat-lbl">Relational Tables Engineered</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">10</div>
+          <div class="stat-lbl">Analytical Modules</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">5</div>
+          <div class="stat-lbl">ETL Pipeline Stages</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">15+</div>
+          <div class="stat-lbl">Professional Certifications</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-visual reveal">
+      <div class="neural-box">
+        <div class="neural-title">⚡ Tech Arsenal</div>
+        <div>
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">SQL Server</span>
+          <span class="skill-tag">Power BI</span>
+          <span class="skill-tag">DAX</span>
+          <span class="skill-tag">Google Gemini</span>
+          <span class="skill-tag">Streamlit</span>
+          <span class="skill-tag">Pandas</span>
+          <span class="skill-tag">PostgreSQL</span>
+          <span class="skill-tag">Star Schema</span>
+          <span class="skill-tag">ETL</span>
+          <span class="skill-tag">Medallion Architecture</span>
+          <span class="skill-tag">OOP</span>
+          <span class="skill-tag">R Programming</span>
+          <span class="skill-tag">Excel</span>
+          <span class="skill-tag">Tableau</span>
+          <span class="skill-tag">Window Functions</span>
+          <span class="skill-tag">Data Modeling</span>
+          <span class="skill-tag">LLM Integration</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- OlistIQ Case Study -->
+<section id="olistiq">
+  <div class="section-tag">Featured Case Study</div>
+  <h2 class="section-title">OlistIQ — <span class="gradient-text">AI-Powered BI Platform</span></h2>
+  
+  <div class="case-hero reveal">
+    <p style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:16px">Product Overview</p>
+    <h3 style="font-family:'Sora',sans-serif;font-size:28px;font-weight:700;color:var(--text);margin-bottom:16px;letter-spacing:-0.5px">An AI-powered business intelligence ecosystem designed to transform complex transactional data into intelligent executive insights.</h3>
+    <p style="font-size:15px;color:var(--text-muted);line-height:1.8;max-width:700px">OlistIQ processes 100,000+ records across 8 relational tables through a 5-stage ETL pipeline, delivering 10 analytical modules with automated anomaly detection and Google Gemini-powered conversational analytics — all in one unified platform.</p>
+    <div class="case-links">
+      <a href="https://github.com/nouran2002/OlistIQ" target="_blank" class="case-link">⬡ GitHub Repository</a>
+      <a href="https://olistiq.streamlit.app/" target="_blank" class="case-link">⬢ Live Demo</a>
+    </div>
+  </div>
+
+  <!-- Problem & Solution -->
+  <div class="case-grid reveal">
+    <div class="case-card">
+      <h3>⚠ The Business Problem</h3>
+      <p>Enterprises drowning in <strong style="color:var(--text)">fragmented transactional data</strong> — slow reporting cycles, siloed analytics, zero conversational access to insights, and traditional dashboards that show <em>what</em> but never <em>why</em>.</p>
+      <p style="margin-top:12px">Analysts spending 80% of their time on data preparation instead of generating value. Decision-makers waiting weeks for reports.</p>
+    </div>
+    <div class="case-card">
+      <h3 style="color:var(--cyan)">✦ The OlistIQ Solution</h3>
+      <p>A <strong style="color:var(--text)">modular OOP architecture</strong> that automates the entire analytics pipeline — from raw CSV ingestion to AI-generated executive insights. Stakeholders ask questions in plain English; OlistIQ answers with data.</p>
+      <p style="margin-top:12px">Business intelligence that speaks human. Analytics that think. Dashboards that explain themselves.</p>
+    </div>
+  </div>
+
+  <!-- ETL Pipeline -->
+  <div class="etl-wrapper reveal">
+    <div class="etl-title">5-Stage ETL Intelligence Pipeline</div>
+    <div class="etl-flow" id="etlFlow">
+      <div class="etl-stage active" onclick="setActiveETL(this,0)">
+        <div class="etl-num">1</div>
+        <div class="etl-name">Raw Data</div>
+        <div class="etl-desc">CSV ingestion from 8 sources</div>
+      </div>
+      <div class="etl-arrow"><div class="etl-pulse"></div></div>
+      <div class="etl-stage" onclick="setActiveETL(this,1)">
+        <div class="etl-num">2</div>
+        <div class="etl-name">Cleaning</div>
+        <div class="etl-desc">Null handling & validation</div>
+      </div>
+      <div class="etl-arrow"><div class="etl-pulse" style="animation-delay:0.4s"></div></div>
+      <div class="etl-stage" onclick="setActiveETL(this,2)">
+        <div class="etl-num">3</div>
+        <div class="etl-name">Enrichment</div>
+        <div class="etl-desc">Feature engineering & joins</div>
+      </div>
+      <div class="etl-arrow"><div class="etl-pulse" style="animation-delay:0.8s"></div></div>
+      <div class="etl-stage" onclick="setActiveETL(this,3)">
+        <div class="etl-num">4</div>
+        <div class="etl-name">Aggregation</div>
+        <div class="etl-desc">KPI computation & grouping</div>
+      </div>
+      <div class="etl-arrow"><div class="etl-pulse" style="animation-delay:1.2s"></div></div>
+      <div class="etl-stage" onclick="setActiveETL(this,4)">
+        <div class="etl-num">5</div>
+        <div class="etl-name">Insights</div>
+        <div class="etl-desc">AI-powered executive output</div>
+      </div>
+    </div>
+    <div id="etlDetail" style="margin-top:32px;padding:24px;background:rgba(2,6,23,0.6);border-radius:12px;border:1px solid rgba(0,212,255,0.1);font-size:14px;color:var(--text-muted);line-height:1.7;min-height:60px;transition:all 0.3s">
+      <strong style="color:var(--cyan)">Stage 1 — Raw Data Ingestion:</strong> Automated pipeline reads from 8 relational CSV sources including orders, customers, products, payments, reviews, sellers, geolocation, and order items. Full schema detection and type inference applied.
+    </div>
+  </div>
+
+  <!-- AI Conversational Section -->
+  <div class="ai-section reveal">
+    <div class="section-tag" style="margin-bottom:16px">AI Integration</div>
+    <h3 style="font-family:'Sora',sans-serif;font-size:26px;font-weight:700;color:var(--text);margin-bottom:16px;letter-spacing:-0.5px">Conversational Analytics Engine</h3>
+    <p style="font-size:15px;color:var(--text-muted);line-height:1.7;max-width:600px;margin-bottom:24px">OlistIQ enables stakeholders to interact with enterprise analytics using <strong style="color:var(--text)">natural language</strong> instead of traditional query systems — powered by Google Gemini.</p>
+    <div class="ai-chat-preview">
+      <div class="chat-msg chat-user">📊 What are the top revenue-generating product categories this quarter?</div>
+      <div class="chat-msg chat-ai"><strong>OlistIQ Intelligence:</strong> Based on Q3 analysis, <strong>Bed & Bath Table</strong> leads with R$1.2M in revenue, followed by <strong>Health & Beauty</strong> at R$986K. Furniture Decor shows a 23% QoQ growth signal — anomaly detection flagged this as a breakout category worth immediate attention.</div>
+      <div class="chat-msg chat-user">🚨 Show me any anomalies detected in seller performance</div>
+      <div class="chat-msg chat-ai"><strong>OlistIQ Intelligence:</strong> 3 seller anomalies detected this period: Seller #7C2F shows delivery delay spike (+47% vs baseline), Seller #A1D3 has review score drop below threshold (3.2 → 2.8), and Seller #BE9A demonstrates unusual order volume surge (+312%) — likely promotional activity. Recommend immediate review of #7C2F.</div>
+    </div>
+  </div>
+
+  <!-- KPI Impact -->
+  <div class="section-tag" style="margin-top:60px;margin-bottom:20px">Business Impact</div>
+  <div class="kpi-grid reveal">
+    <div class="kpi-impact">
+      <div class="kpi-big">100K<span class="kpi-unit">+</span></div>
+      <div class="kpi-desc">Records Processed & Analyzed</div>
+    </div>
+    <div class="kpi-impact">
+      <div class="kpi-big">8</div>
+      <div class="kpi-desc">Relational Tables Integrated</div>
+    </div>
+    <div class="kpi-impact">
+      <div class="kpi-big">5</div>
+      <div class="kpi-desc">Stage ETL Pipeline</div>
+    </div>
+    <div class="kpi-impact">
+      <div class="kpi-big">10</div>
+      <div class="kpi-desc">Analytical Modules</div>
+    </div>
+    <div class="kpi-impact">
+      <div class="kpi-big">AI</div>
+      <div class="kpi-desc">Gemini-Powered Conversational Layer</div>
+    </div>
+    <div class="kpi-impact">
+      <div class="kpi-big">OOP</div>
+      <div class="kpi-desc">Modular Architecture with Caching</div>
+    </div>
+  </div>
+
+ <!-- ========================= -->
+<!-- DASHBOARD SHOWCASE -->
+<!-- ========================= -->
+
+<div class="section-tag" style="margin-top:60px;margin-bottom:20px">
+  Executive Dashboards
+</div>
+
+<div class="dash-grid reveal">
+
+  <!-- Dashboard 1 -->
+  <div class="dash-frame">
+
+    <img src="E:\Google data analytics certificate\cv\assets\projects\AdventureWorks_page-0001.jpg"
+         alt="Executive Dashboard"
+         class="real-dashboard">
+
+    <div class="dash-info">
+
+      <div class="dash-name">
+        Adventure Works — Executive Summary
+      </div>
+
+      <div class="dash-sub">
+        Revenue, Customers, Resellers & Products Analysis
+      </div>
+
+      <div class="dash-tags">
+        <span class="dash-tag">Power BI</span>
+        <span class="dash-tag">DAX</span>
+        <span class="dash-tag">Executive</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Dashboard 2 -->
+  <div class="dash-frame">
+
+    <img src="E:\Google data analytics certificate\cv\assets\projects\Datawarehouse-1_page-0013.jpg"
+         alt="Customer Dashboard"
+         class="real-dashboard">
+
+    <div class="dash-info">
+
+      <div class="dash-name">
+        Customer Performance Dashboard
+      </div>
+
+      <div class="dash-sub">
+        Customer Segmentation, Revenue Distribution & Purchase Behavior
+      </div>
+
+      <div class="dash-tags">
+        <span class="dash-tag">SQL Server</span>
+        <span class="dash-tag">Data warehousing</span>
+        <span class="dash-tag">Power BI</span>
+        <span class="dash-tag">ETL</span>
+        <span class="dash-tag">Star Schema</span>
+        <span class="dash-tag">Window Functions</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dashboard 3 -->
+  <div class="dash-frame">
+
+    <img src="E:\Google data analytics certificate\cv\assets\projects\sephora data visualization_page-0001.jpg"
+         alt="Products Dashboard"
+         class="real-dashboard">
+
+    <div class="dash-info">
+
+      <div class="dash-name">
+        Product Intelligence Dashboard
+      </div>
+
+      <div class="dash-sub">
+        Product Performance, Revenue Contribution & Quantity Analysis
+      </div>
+
+      <div class="dash-tags">
+        <span class="dash-tag">Python</span>
+        <span class="dash-tag">Pandas</span>
+        <span class="dash-tag">Power BI</span>
+        <span class="dash-tag">Product Analytics</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Dashboard 4 -->
+  <div class="dash-frame">
+
+    <img src="E:\Google data analytics certificate\cv\assets\projects\Customer Behavior & Churn_page-0001.jpg"
+         alt="Churn Dashboard"
+         class="real-dashboard">
+
+    <div class="dash-info">
+
+      <div class="dash-name">
+        Customer Churn & Retention Dashboard
+      </div>
+
+      <div class="dash-sub">
+        Churn Drivers, Customer Risk Analysis & Strategic Recommendations
+      </div>
+
+      <div class="dash-tags">
+        <span class="dash-tag">Data warehousing</span>
+        <span class="dash-tag">Data cleaning</span>
+        <span class="dash-tag">SQL server</span>
+        <span class="dash-tag">Power BI</span>
+        <span class="dash-tag">DAX</span>
+        <span class="dash-tag">RFM Analysis</span>
+        <span class="dash-tag">Segmentation</span>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="divider"></div>
+<!-- Projects Lab -->
+<section id="projects">
+  <div class="section-tag">Projects Lab</div>
+  <h2 class="section-title">Engineered <span class="gradient-text">Experiences</span></h2>
+  <p class="section-desc">Every project is a full-stack data story — from raw ingestion to executive insights.</p>
+  <div class="projects-grid">
+    <div class="project-card reveal">
+      <div class="project-icon">🏗</div>
+      <div class="project-title">SQL Data Warehouse Project</div>
+      <p class="project-desc">End-to-end data warehouse built on Medallion Architecture — Bronze/Silver/Gold layers using SQL Server. Features automated ETL pipelines, Star Schema dimensional modeling, and executive Power BI dashboards with Customer 360 segmentation.</p>
+      <div class="tech-pills">
+        <span class="tech-pill">SQL Server</span>
+        <span class="tech-pill">Power BI</span>
+        <span class="tech-pill">Star Schema</span>
+        <span class="tech-pill">ETL</span>
+        <span class="tech-pill">Window Functions</span>
+      </div>
+      <a href="https://github.com/nouran2002/SQL-Data-Warehouse-Project" target="_blank" class="project-link">⬡ View Repository →</a>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-icon">📉</div>
+      <div class="project-title">E-Commerce Customer Churn Dashboard</div>
+      <p class="project-desc">Deep-dive Power BI analysis uncovering that 73% of churn is driven by unresolved support issues. Features RFM segmentation, loyalty cohort analysis, behavioral drivers mapping, and strategic recommendations with 57% cart abandonment diagnosis.</p>
+      <div class="tech-pills">
+        <span class="tech-pill">Power BI</span>
+        <span class="tech-pill">DAX</span>
+        <span class="tech-pill">RFM Analysis</span>
+        <span class="tech-pill">Segmentation</span>
+      </div>
+      <span class="project-link">📊 Dashboard Project</span>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-icon">🚴</div>
+      <div class="project-title">Adventure Works BI Dashboard</div>
+      <p class="project-desc">Multi-page executive Power BI dashboard for AdventureWorks covering $109.8M in sales across 121K orders. Includes Executive Summary, Customers (18K+), Resellers (702), and Products (295) with dynamic YoY comparisons and country-level drill-downs.</p>
+      <div class="tech-pills">
+        <span class="tech-pill">Po    wer BI</span>
+        <span class="tech-pill">DAX</span>
+        <span class="tech-pill">Executive Analytics</span>
+        <span class="tech-pill">Multi-page</span>
+  </div>
+      <span class="project-link">📊 BI Dashboard</span>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-icon">💄</div>
+      <div class="project-title">Sephora Product Intelligence Analysis</div>
+      <p class="project-desc">Advanced product analytics and customer intelligence platform for Sephora's catalog. Features product performance segmentation, revenue contribution analysis, price-vs-quantity modeling, and data-driven merchandising recommendations.</p>
+      <div class="tech-pills">
+        <span class="tech-pill">Python</span>
+        <span class="tech-pill">Pandas</span>
+        <span class="tech-pill">Power BI</span>
+        <span class="tech-pill">Product Analytics</span>
+      </div>
+      <span class="project-link">📊 Intelligence Report</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Architecture -->
+<section id="architecture">
+  <div class="section-tag">Data Engineering</div>
+  <h2 class="section-title">Medallion <span class="gradient-text">Architecture</span></h2>
+  <p class="section-desc">Enterprise-grade data architecture designed for scalability, performance, and business-ready analytics.</p>
+  <div class="arch-diagram reveal">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:40px;gap:16px">
+      <div style="text-align:center;font-size:12px;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase">Sources<br><span style="color:var(--text);font-size:18px;font-weight:700">CRM / ERP</span></div>
+      <div style="flex:1;height:1px;background:linear-gradient(90deg,rgba(37,99,255,0.5),rgba(0,212,255,0.5));position:relative">
+        <div style="position:absolute;right:-6px;top:50%;transform:translateY(-50%);border:6px solid transparent;border-left:10px solid rgba(0,212,255,0.5)"></div>
+      </div>
+      <div class="arch-layers" style="flex:2">
+        <div class="arch-layer bronze">
+          <div class="arch-badge">Bronze</div>
+          <div style="font-family:'Sora',sans-serif;font-size:14px;font-weight:600;color:var(--text);margin-bottom:8px">Raw Data Layer</div>
+          <ul class="arch-items">
+            <li>Batch Processing</li>
+            <li>Full Load (Truncate & Insert)</li>
+            <li>As-Is Schema</li>
+            <li>6 Source Files</li>
+          </ul>
+        </div>
+        <div class="arch-layer silver">
+          <div class="arch-badge">Silver</div>
+          <div style="font-family:'Sora',sans-serif;font-size:14px;font-weight:600;color:var(--text);margin-bottom:8px">Clean Data Layer</div>
+          <ul class="arch-items">
+            <li>Data Cleansing</li>
+            <li>Standardization</li>
+            <li>Derived Columns</li>
+            <li>100% Consistency</li>
+          </ul>
+        </div>
+        <div class="arch-layer gold">
+          <div class="arch-badge">Gold</div>
+          <div style="font-family:'Sora',sans-serif;font-size:14px;font-weight:600;color:var(--text);margin-bottom:8px">Business Layer</div>
+          <ul class="arch-items">
+            <li>Star Schema Views</li>
+            <li>dim_customers</li>
+            <li>dim_products</li>
+            <li>facts_sales</li>
+          </ul>
+        </div>
+      </div>
+      <div style="flex:1;height:1px;background:linear-gradient(90deg,rgba(0,212,255,0.5),rgba(200,160,50,0.5));position:relative">
+        <div style="position:absolute;right:-6px;top:50%;transform:translateY(-50%);border:6px solid transparent;border-left:10px solid rgba(200,160,50,0.5)"></div>
+      </div>
+      <div style="text-align:center;font-size:12px;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase">Consume<br><span style="color:var(--text);font-size:14px;font-weight:700">Power BI · SQL · ML</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Skills -->
+<section id="skills">
+  <div class="section-tag">Capabilities</div>
+  <h2 class="section-title">Skills & <span class="gradient-text">Technologies</span></h2>
+  <div class="skills-grid">
+    <div class="skill-module reveal">
+      <div class="skill-cat">Analytics</div>
+      <div class="skill-name">Data Analytics</div>
+      <ul class="skill-list">
+        <li>Exploratory Data Analysis</li>
+        <li>Statistical Modeling</li>
+        <li>Customer Segmentation</li>
+        <li>Anomaly Detection</li>
+        <li>R Programming</li>
+        <li>Excel Advanced</li>
+      </ul>
+    </div>
+    <div class="skill-module reveal">
+      <div class="skill-cat">Engineering</div>
+      <div class="skill-name">SQL & Warehousing</div>
+      <ul class="skill-list">
+        <li>SQL Server / PostgreSQL</li>
+        <li>Window Functions & CTEs</li>
+        <li>Star Schema Design</li>
+        <li>Medallion Architecture</li>
+        <li>Data Lineage Mapping</li>
+        <li>Performance Optimization</li>
+      </ul>
+    </div>
+    <div class="skill-module reveal">
+      <div class="skill-cat">Automation</div>
+      <div class="skill-name">Python & Pipelines</div>
+      <ul class="skill-list">
+        <li>Pandas & NumPy</li>
+        <li>OOP Architecture</li>
+        <li>Streamlit Apps</li>
+        <li>ETL Pipeline Design</li>
+        <li>Data Preprocessing</li>
+        <li>Caching Optimization</li>
+      </ul>
+    </div>
+    <div class="skill-module reveal">
+      <div class="skill-cat">AI & LLM</div>
+      <div class="skill-name">AI Integration</div>
+      <ul class="skill-list">
+        <li>Google Gemini API</li>
+        <li>Conversational Analytics</li>
+        <li>Natural Language Querying</li>
+        <li>AI-Powered Insights</li>
+        <li>LLM Prompt Engineering</li>
+        <li>Intelligent Dashboards</li>
+      </ul>
+    </div>
+    <div class="skill-module reveal">
+      <div class="skill-cat">Visualization</div>
+      <div class="skill-name">BI & Dashboards</div>
+      <ul class="skill-list">
+        <li>Power BI (Advanced)</li>
+        <li>DAX Formulas</li>
+        <li>Executive Dashboards</li>
+        <li>Tableau</li>
+        <li>Interactive Reports</li>
+        <li>KPI Design</li>
+      </ul>
+    </div>
+    <div class="skill-module reveal">
+      <div class="skill-cat">Systems</div>
+      <div class="skill-name">Data Engineering</div>
+      <ul class="skill-list">
+        <li>ETL System Design</li>
+        <li>Data Modeling</li>
+        <li>Schema Architecture</li>
+        <li>Data Quality Management</li>
+        <li>CRM / ERP Integration</li>
+        <li>Business Intelligence</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ========================= -->
+<!-- CERTIFICATIONS -->
+<!-- ========================= -->
+
+<section id="certifications">
+
+  <div class="section-tag">
+    Professional Growth
+  </div>
+
+  <h2 class="section-title">
+    Certifications &
+    <span class="gradient-text">Credentials</span>
+  </h2>
+
+  <p class="section-desc">
+    Industry-recognized certifications focused on data analytics,
+    business intelligence, SQL engineering and AI-driven problem solving.
+  </p>
+
+  <div class="certs-grid reveal">
+
+    <!-- CERT 1 -->
+    <div class="cert-card">
+
+      <img src="E:\Google data analytics certificate\cv\assets\Certificates\Coursera UTIALTLUM9VS_page-0001.jpg"
+           alt="Google Data Analytics"
+           class="cert-image">
+
+      <div class="cert-org">
+        Google · Coursera
+      </div>
+
+      <div class="cert-name">
+        Google Data Analytics Professional Certificate
+      </div>
+
+      <div class="cert-date">
+        2026
+      </div>
+
+    </div>
+
+    <!-- CERT 2 -->
+    <div class="cert-card">
+
+      <img src="E:\Google data analytics certificate\cv\assets\Certificates\certificate (6)_page-0001.jpg"
+           alt="Data preparation in powerBI"
+           class="cert-image">
+
+      <div class="cert-org">
+        DataCamp
+      </div>
+
+      <div class="cert-name">
+        Data preparation in powerBI
+      </div>
+
+      <div class="cert-date">
+        2025
+      </div>
+
+    </div>
+
+    <!-- CERT 3 -->
+    <div class="cert-card">
+
+      <img src="E:\Google data analytics certificate\cv\assets\Certificates\certificate_page-0001.jpg"
+           alt="Data Manipulation in SQL"
+           class="cert-image">
+
+      <div class="cert-org">
+        Google · Coursera
+      </div>
+
+      <div class="cert-name">
+        Data Manipulation in SQL
+      </div>
+
+      <div class="cert-date">
+        2025
+      </div>
+
+    </div>
+
+    <!-- CERT 4 -->
+    <div class="cert-card">
+
+      <img src="E:\Google data analytics certificate\cv\assets\Certificates\173237587_page-0001.jpg"
+           alt="powerBI DAX Mastery"
+           class="cert-image">
+
+      <div class="cert-org">
+        Udemy · MTF Inistitute
+      </div>
+
+      <div class="cert-name">
+        Prepare Data for Exploration
+      </div>
+
+      <div class="cert-date">
+        2025
+      </div>
+
+    </div>
+
+    <!-- CERT 5 -->
+    <div class="cert-card">
+
+      <img src="E:\Google data analytics certificate\cv\assets\Certificates\certificate (7)_page-0001.jpg"
+           alt="Data Visualization in powerBI"
+           class="cert-image">
+
+      <div class="cert-org">
+        DataCamp
+      </div>
+
+      <div class="cert-name">
+        Data Visualization in powerBI
+      </div>
+
+      <div class="cert-date">
+        2025
+      </div>
+
+    </div>
+
+    <!-- CERT 6 -->
+    <div class="cert-card">
+
+      <img src="E:\Google data analytics certificate\cv\assets\Certificates\GoogleDataAnalyticsProfessionalCertificatev.3_Badge20260114-31-3bneun_page-0001.jpg"
+           alt="Credly Badge"
+           class="cert-image">
+
+      <div class="cert-org">
+        Credly Badge
+      </div>
+
+      <div class="cert-name">
+        Google Data Analytics Professional Badge
+      </div>
+
+      <div class="cert-date">
+        Verified Credential
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<div class="divider"></div>
+
+<!-- Timeline -->
+<section id="timeline" style="background:var(--bg-primary)">
+  <div class="section-tag">Journey</div>
+  <h2 class="section-title">The <span class="gradient-text">Growth Arc</span></h2>
+  <div class="timeline-wrap">
+    <div class="timeline-line"></div>
+    <div class="timeline-item reveal">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">August 2025</div>
+      <div class="timeline-title">Began Google Data Analytics Professional Certificate</div>
+      <div class="timeline-desc">Started the 9-course program covering foundations of data, SQL, R, Tableau, and analytics case studies — laying the technical groundwork for a data career.</div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">October–November 2025</div>
+      <div class="timeline-title">Python, Excel & Data Processing Mastery</div>
+      <div class="timeline-desc">Completed Python Programming (University of Michigan), Excel Fundamentals (Macquarie University), and advanced data processing courses — building the automation toolkit.</div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">January 2026</div>
+      <div class="timeline-title">Google Data Analytics Certificate Awarded + SQL Deep Dive</div>
+      <div class="timeline-desc">Completed the full 9-course Google certification. Simultaneously completed 6 DataCamp SQL courses from Intro to PostgreSQL Window Functions — becoming proficient in enterprise SQL.</div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">January–February 2026</div>
+      <div class="timeline-title">Built SQL Data Warehouse & Adventure Works BI Dashboard</div>
+      <div class="timeline-desc">Designed and built a full Medallion Architecture data warehouse from scratch. Completed the multi-page Adventure Works Power BI dashboard with executive KPIs, customers, resellers, and products analysis.</div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">February 2026</div>
+      <div class="timeline-title">Launched OlistIQ — AI-Powered BI Platform</div>
+      <div class="timeline-desc">Architected and deployed OlistIQ as a full-stack AI analytics platform. Integrated Google Gemini for conversational analytics, built a 5-stage ETL pipeline, 10 analytical modules, and deployed on Streamlit.</div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">Now — May 2026</div>
+      <div class="timeline-title">Seeking Impact-Driven Data Opportunities</div>
+      <div class="timeline-desc">Portfolio complete. Ready to bring AI-powered analytics, data engineering expertise, and business intelligence solutions to a team building the future of data.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- NourAI Assistant -->
+<section id="assistant">
+  <div class="section-tag">AI Assistant</div>
+  <h2 class="section-title" style="text-align:center">Meet <span class="gradient-text">NourAI</span></h2>
+  <p class="section-desc" style="text-align:center;margin:0 auto 0">Ask me anything about Nouran's projects, skills, or experience.</p>
+  <div class="ai-panel">
+    <div class="ai-panel-header">
+      <div class="ai-orb"></div>
+      <div>
+        <div class="ai-panel-title">NourAI Assistant</div>
+        <div class="ai-panel-sub">Powered by Claude · Portfolio Intelligence</div>
+      </div>
+      <div class="ai-status">Online</div>
+    </div>
+    <div class="ai-messages" id="aiMessages">
+      <div class="msg-row">
+        <div class="msg-avatar ai-av">N</div>
+        <div class="msg-bubble ai-bubble">Hello! I'm <strong>NourAI</strong>, Nouran's AI portfolio assistant. I can tell you about her projects, technical skills, OlistIQ platform, certifications, and experience. What would you like to know?</div>
+      </div>
+    </div>
+    <div class="ai-suggestions" id="aiSuggestions">
+      <span class="ai-suggestion" onclick="sendSuggestion('Tell me about OlistIQ')">Tell me about OlistIQ</span>
+      <span class="ai-suggestion" onclick="sendSuggestion('What is her tech stack?')">Tech stack?</span>
+      <span class="ai-suggestion" onclick="sendSuggestion('Explain the ETL pipeline architecture')">ETL Pipeline</span>
+      <span class="ai-suggestion" onclick="sendSuggestion('What certifications does she have?')">Certifications</span>
+      <span class="ai-suggestion" onclick="sendSuggestion('Why should I hire Nouran?')">Why hire Nouran?</span>
+    </div>
+    <div class="ai-input-row">
+      <input type="text" class="ai-input" id="aiInput" placeholder="Ask anything about Nouran's work..." />
+      <button class="ai-send" onclick="sendMessage()" id="aiSendBtn">➤</button>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Contact -->
+<section id="contact">
+  <div class="section-tag">Let's Connect</div>
+  <h2 class="section-title">Build Something <span class="gradient-text">Intelligent</span></h2>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <a href="mailto:nouran20602@gmail.com" class="contact-item">
+        <div class="contact-icon">✉</div>
+        <div>
+          <div class="contact-label">Email</div>
+          <div class="contact-val">nouran20602@gmail.com</div>
+        </div>
+      </a>
+      <a href="https://github.com/nouran2002" target="_blank" class="contact-item">
+        <div class="contact-icon">⬡</div>
+        <div>
+          <div class="contact-label">GitHub</div>
+          <div class="contact-val">github.com/nouran2002</div>
+        </div>
+      </a>
+      <a href="https://www.linkedin.com/in/nouran-waleed-mohamed-1a54843b4" target="_blank" class="contact-item">
+        <div class="contact-icon">🔗</div>
+        <div>
+          <div class="contact-label">LinkedIn</div>
+          <div class="contact-val">Nouran Waleed Mohamed</div>
+        </div>
+      </a>
+    </div>
+    <div class="contact-cta-box">
+      <h3>Ready to Transform Data<br>Into Intelligence?</h3>
+      <p>Whether you're building a BI ecosystem, need AI-powered analytics, or want to architect your data infrastructure — let's create something extraordinary together.</p>
+      <a href="mailto:nouran20602@gmail.com" class="btn-primary" style="display:inline-block">Start a Conversation →</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-logo">Nouran.AI — Data Intelligence</div>
+  <div class="footer-copy">© 2026 Nouran Waleed Mohamed. All rights reserved.</div>
+</footer>
+
+<script>
+// Cursor
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cursor.style.transform=`translate(${mx-6}px,${my-6}px)`;
+});
+function animateRing(){
+  rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;
+  ring.style.transform=`translate(${rx-20}px,${ry-20}px)`;
+  requestAnimationFrame(animateRing);
+}
+animateRing();
+
+// Loader
+const loaderTexts=['Initializing Intelligence Systems','Calibrating Data Streams','Loading Neural Networks','Connecting Analytics Engine','Launching Portfolio...'];
+let ti=0;
+const lt=document.getElementById('loaderText');
+const ltInterval=setInterval(()=>{
+  ti++;
+  if(ti<loaderTexts.length){lt.textContent=loaderTexts[ti];}
+  else{clearInterval(ltInterval);}
+},600);
+
+// Loader particles
+const lp=document.getElementById('loaderParticles');
+for(let i=0;i<20;i++){
+  const p=document.createElement('div');
+  p.className='lp';
+  p.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;animation-delay:${Math.random()*3}s;animation-duration:${2+Math.random()*3}s;opacity:${Math.random()*0.8}`;
+  lp.appendChild(p);
+}
+
+// Hide loader
+setTimeout(()=>{
+  const loader=document.getElementById('loader');
+  loader.style.opacity='0';
+  setTimeout(()=>loader.style.display='none',800);
+},3200);
+
+// Neural network canvas
+const canvas=document.getElementById('neuralCanvas');
+const ctx=canvas.getContext('2d');
+let W,H,nodes=[];
+
+function resize(){
+  W=canvas.width=window.innerWidth;
+  H=canvas.height=window.innerHeight;
+}
+resize();
+window.addEventListener('resize',resize);
+
+for(let i=0;i<70;i++){
+  nodes.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-0.5)*0.4,vy:(Math.random()-0.5)*0.4,r:Math.random()*2+1});
+}
+
+let mouseX=W/2,mouseY=H/2;
+document.addEventListener('mousemove',e=>{mouseX=e.clientX;mouseY=e.clientY;});
+
+function drawNeural(){
+  ctx.clearRect(0,0,W,H);
+  nodes.forEach(n=>{
+    n.x+=n.vx;n.y+=n.vy;
+    if(n.x<0||n.x>W)n.vx*=-1;
+    if(n.y<0||n.y>H)n.vy*=-1;
+    const dx=n.x-mouseX,dy=n.y-mouseY,dist=Math.sqrt(dx*dx+dy*dy);
+    if(dist<150){n.vx-=dx*0.0003;n.vy-=dy*0.0003;}
+  });
+  for(let i=0;i<nodes.length;i++){
+    for(let j=i+1;j<nodes.length;j++){
+      const a=nodes[i],b=nodes[j];
+      const d=Math.sqrt((a.x-b.x)**2+(a.y-b.y)**2);
+      if(d<120){
+        ctx.beginPath();
+        ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
+        const alpha=(1-d/120)*0.15;
+        ctx.strokeStyle=`rgba(37,99,255,${alpha})`;
+        ctx.lineWidth=0.5;ctx.stroke();
+      }
+    }
+  }
+  nodes.forEach(n=>{
+    ctx.beginPath();
+    ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
+    ctx.fillStyle='rgba(0,212,255,0.4)';
+    ctx.fill();
+  });
+  requestAnimationFrame(drawNeural);
+}
+drawNeural();
+
+// Reveal animations
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');}});
+},{threshold:0.1,rootMargin:'0px 0px -50px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+// ETL stages
+const etlDetails=[
+  '<strong style="color:var(--cyan)">Stage 1 — Raw Data Ingestion:</strong> Automated pipeline reads from 8 relational CSV sources: orders, customers, products, payments, reviews, sellers, geolocation, and order items. Full schema detection and type inference applied.',
+  '<strong style="color:var(--cyan)">Stage 2 — Data Cleaning:</strong> Null value handling with intelligent imputation strategies, duplicate removal, data type normalization, date parsing standardization, and outlier flagging across all 8 datasets.',
+  '<strong style="color:var(--cyan)">Stage 3 — Data Enrichment:</strong> Feature engineering with derived metrics (delivery time, review lag, seller performance scores), multi-table joins, geolocation enrichment, and customer lifetime value computation.',
+  '<strong style="color:var(--cyan)">Stage 4 — Aggregation:</strong> KPI computation at customer, seller, product, and category levels. Time-series aggregations by day/week/month/quarter. RFM scoring and customer segmentation assignment.',
+  '<strong style="color:var(--cyan)">Stage 5 — Interactive Insights:</strong> AI-powered executive output via Google Gemini integration. Automated anomaly alerts, natural language reporting, Streamlit dashboard rendering, and cached result serving for performance.'
+];
+function setActiveETL(el,idx){
+  document.querySelectorAll('.etl-stage').forEach(s=>s.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('etlDetail').innerHTML=etlDetails[idx];
+}
+
+// NourAI Chat
+const SYSTEM=`You are NourAI, the AI assistant embedded in Nouran Waleed Mohamed's portfolio website. You speak confidently, professionally, and with a futuristic AI-product tone. You know everything about Nouran.
+
+Key facts about Nouran:
+- Name: Nouran Waleed Mohamed
+- Title: Data Analyst | AI Solutions Developer  
+- Email: nouran20602@gmail.com
+- GitHub: https://github.com/nouran2002
+- LinkedIn: https://www.linkedin.com/in/nouran-waleed-mohamed-1a54843b4
+
+Projects:
+1. OlistIQ (flagship): AI-powered BI platform. 100K+ records, 8 relational tables, 5-stage ETL pipeline, 10 analytical modules, Google Gemini conversational analytics, automated anomaly detection. Built with Python OOP, Streamlit, Pandas. Live at olistiq.streamlit.app
+2. SQL Data Warehouse: Medallion Architecture (Bronze/Silver/Gold), SQL Server, Power BI, Star Schema, Customer 360 segmentation with Window Functions
+3. Adventure Works BI Dashboard: Multi-page Power BI, $109.8M in sales, 121K orders, 18K+ customers, executive analytics
+4. E-Commerce Customer Churn: Power BI analysis finding 73% churn from unresolved support, 57% cart abandonment, RFM segmentation
+5. Sephora Product Intelligence: Python + Power BI product analytics
+
+Skills: Python (Pandas, OOP, Streamlit), SQL (SQL Server, PostgreSQL, Window Functions, CTEs), Power BI (DAX, Advanced), Google Gemini/LLM integration, Medallion Architecture, ETL design, Star Schema, R Programming, Excel, Data Modeling
+
+Certifications:
+- Google Data Analytics Professional Certificate (Jan 2026, 9 courses, Coursera)
+- Power BI DAX Mastery (Udemy, Feb 2026)
+- 6 DataCamp SQL courses (Intro to SQL, Intermediate, Joining Data, Data Manipulation, PostgreSQL Window Functions, Data Preparation in Power BI)
+- Introduction to Power BI + DAX (DataCamp)
+- Data Visualization in Power BI (DataCamp)
+- Programming for Everybody Python (University of Michigan, Coursera)
+- Python Programming Masterclass (Udemy)
+- Excel Fundamentals for Data Analysis (Macquarie University, Coursera)
+
+Keep answers concise (2-4 sentences max), insightful, and professional. Use occasional data-specific terminology. When asked why they should hire Nouran, be compelling and specific.`;
+
+let chatHistory=[];
+async function sendMessage(){
+  const input=document.getElementById('aiInput');
+  const msg=input.value.trim();
+  if(!msg)return;
+  input.value='';
+  addMsg(msg,'user');
+  const typing=addTyping();
+  document.getElementById('aiSuggestions').style.display='none';
+  const btn=document.getElementById('aiSendBtn');
+  btn.disabled=true;
+  chatHistory.push({role:'user',content:msg});
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        system:SYSTEM,
+        messages:chatHistory
+      })
+    });
+    const data=await res.json();
+    typing.remove();
+    const reply=data.content&&data.content[0]?data.content[0].text:'I can answer questions about Nouran\'s work, projects, skills, and certifications. What would you like to know?';
+    addMsg(reply,'ai');
+    chatHistory.push({role:'assistant',content:reply});
+  }catch(e){
+    typing.remove();
+    addMsg('Let me tell you directly — Nouran has built OlistIQ, an AI-powered BI platform with 100K+ records, Google Gemini integration, and a 5-stage ETL pipeline. Ask me anything specific!','ai');
+  }
+  btn.disabled=false;
+}
+
+function addMsg(text,role){
+  const messages=document.getElementById('aiMessages');
+  const row=document.createElement('div');
+  row.className=`msg-row ${role==='user'?'user-row':''}`;
+  const av=document.createElement('div');
+  av.className=`msg-avatar ${role==='user'?'user-av':'ai-av'}`;
+  av.textContent=role==='user'?'U':'N';
+  const bubble=document.createElement('div');
+  bubble.className=`msg-bubble ${role==='user'?'user-bubble':'ai-bubble'}`;
+  bubble.innerHTML=text.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+  row.appendChild(av);row.appendChild(bubble);
+  messages.appendChild(row);
+  messages.scrollTop=messages.scrollHeight;
+  return row;
+}
+
+function addTyping(){
+  const messages=document.getElementById('aiMessages');
+  const row=document.createElement('div');
+  row.className='msg-row';
+  const av=document.createElement('div');
+  av.className='msg-avatar ai-av';av.textContent='N';
+  const bubble=document.createElement('div');
+  bubble.className='msg-bubble ai-bubble';
+  bubble.innerHTML='<div class="typing-indicator"><span></span><span></span><span></span></div>';
+  row.appendChild(av);row.appendChild(bubble);
+  messages.appendChild(row);
+  messages.scrollTop=messages.scrollHeight;
+  return row;
+}
+
+function sendSuggestion(text){
+  document.getElementById('aiInput').value=text;
+  sendMessage();
+}
+
+document.getElementById('aiInput').addEventListener('keypress',e=>{
+  if(e.key==='Enter')sendMessage();
+});
+
+// Counter animation
+function animateCounter(el,target,suffix=''){
+  let current=0;
+  const inc=target/50;
+  const interval=setInterval(()=>{
+    current+=inc;
+    if(current>=target){current=target;clearInterval(interval);}
+    el.textContent=Math.floor(current)+(suffix||'');
+  },30);
+}
+</script>
+</body>
+</html>
